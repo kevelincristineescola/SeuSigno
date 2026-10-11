@@ -38,8 +38,3 @@ static/css/       style.css (estilos próprios sobre o Bootstrap)
 - `signos`: dados de cada signo. O período é guardado como `MMDD` (21/03 vira `321`). Capricórnio atravessa o ano (`1222` até `119`), e a consulta SQL trata esse caso.
 - `consultas`: um registro por signo descoberto, sem guardar a data de nascimento. Alimenta o contador no fim da página do signo.
 
-## Ideias para evoluir
-
-- Horóscopo do dia por signo (nova tabela ligada a `signos`).
-- Página com a lista de todos os signos e filtro por elemento.
-- Testes automatizados para `buscar_signo_por_data` nas datas de virada.
