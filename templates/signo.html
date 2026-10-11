@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block titulo %}{{ signo.nome }}{% endblock %}
+{% block descricao %}{{ signo.nome }} ({{ signo.periodo }}): elemento {{ signo.elemento }}, regente {{ signo.regente }}, qualidades, pontos de atenção e compatibilidades.{% endblock %}
+
+{% block conteudo %}
+{% set nascimento = get_flashed_messages(category_filter=["nascimento"]) %}
+
+<article class="el-{{ signo.classe }}">
+
+  <section class="container py-5">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-7">
+        {% if nascimento %}
+          <p class="texto-suave mb-1">Para quem nasceu em {{ nascimento[0] }}, o signo é</p>
+        {% endif %}
+        <h1 class="titulo-grande cor-el">{{ signo.nome }}</h1>
+        <p class="periodo">Nascidos entre {{ signo.periodo }}</p>
+
+        <ul class="list-unstyled d-flex flex-wrap gap-2 my-4">
+          {% for palavra in signo.palavras_chave %}
+            <li class="chip">{{ palavra }}</li>
+          {% endfor %}
+        </ul>
+
+        <p class="lead descricao">{{ signo.descricao }}</p>
+        <a class="btn btn-contorno mt-3" href="{{ url_for('index') }}">Consultar outra data</a>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="roda-wrap">
+          {% include "_roda.html" %}
+          <div class="roda-centro">
+            <span class="roda-glifo" aria-hidden="true">{{ signo.simbolo }}&#xFE0E;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4"><h2>Personalidade</h2></div>
+        <div class="col-lg-8">
+          <div class="row g-4">
+            <div class="col-md-6">
+              <h3 class="subtitulo">Qualidades</h3>
+              <ul class="lista-sinal">
+                {% for q in signo.qualidades %}<li>{{ q | capitalize }}</li>{% endfor %}
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h3 class="subtitulo">Pontos de atenção</h3>
+              <ul class="lista-sinal oco">
+                {% for d in signo.desafios %}<li>{{ d | capitalize }}</li>{% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4"><h2>Ficha do signo</h2></div>
+        <div class="col-lg-8">
+          <dl class="ficha mb-0">
+            <div class="ficha-linha"><dt>Período</dt><dd>{{ signo.periodo }}</dd></div>
+            <div class="ficha-linha"><dt>Elemento</dt><dd>{{ signo.elemento }}</dd></div>
+            <div class="ficha-linha"><dt>Modalidade</dt><dd>{{ signo.modalidade }}</dd></div>
+            <div class="ficha-linha"><dt>Planeta regente</dt><dd>{{ signo.regente }}</dd></div>
+            <div class="ficha-linha"><dt>Cor</dt><dd>{{ signo.cor }}</dd></div>
+            <div class="ficha-linha"><dt>Pedra</dt><dd>{{ signo.pedra }}</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4"><h2>Combina com</h2></div>
+        <div class="col-lg-8">
+          <ul class="list-unstyled d-flex flex-wrap gap-2 mb-4">
+            {% for c in compativeis %}
+              <li>
+                <a class="chip el-{{ c.classe }}" href="{{ url_for('signo', slug=c.slug) }}">
+                  <span class="chip-glifo" aria-hidden="true">{{ c.simbolo }}&#xFE0E;</span>{{ c.nome }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+          {% if total > 0 %}
+            <p class="texto-suave small mb-0">
+              {% if total == 1 %}1 pessoa já descobriu{% else %}{{ total }} pessoas já descobriram{% endif %}
+              que é de {{ signo.nome }} por aqui.
+            </p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+</article>
+{% endblock %}

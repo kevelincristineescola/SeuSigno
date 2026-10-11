@@ -1,0 +1,330 @@
+/* ==========================================================================
+   Meu Signo: estilos próprios (carregados depois do Bootstrap)
+   Ideia visual: um mapa estelar em tinta azul-noite sobre papel azulado.
+   As cores quentes e frias vêm dos quatro elementos e só aparecem onde
+   indicam o elemento do signo.
+   ========================================================================== */
+
+/* Permite animar o ângulo da roda (ver @keyframes girar) */
+@property --giro {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+:root {
+  --noite: #131B3B;
+  --ceu: #EDF0F8;
+  --bruma: #D3DAEC;
+  --linha-roda: #B4BED9;
+  --tinta-suave: #4A5373;
+
+  --fogo: #C2371B;
+  --terra: #3F7040;
+  --ar: #1A6C92;
+  --agua: #5546B0;
+
+  --fonte-titulo: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --fonte-simbolos: "Noto Sans Symbols", "Segoe UI Symbol", "Apple Symbols", "DejaVu Sans", sans-serif;
+
+  /* Ajusta o Bootstrap à paleta */
+  --bs-body-font-family: "Albert Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --bs-body-bg: var(--ceu);
+  --bs-body-color: var(--noite);
+}
+
+/* Elemento do signo: define a cor de destaque (--el) do trecho */
+.el-fogo  { --el: var(--fogo); }
+.el-terra { --el: var(--terra); }
+.el-ar    { --el: var(--ar); }
+.el-agua  { --el: var(--agua); }
+
+/* ---------- Base ---------- */
+body {
+  background: var(--ceu);
+  color: var(--noite);
+}
+
+h1, h2, h3 {
+  font-family: var(--fonte-titulo);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+h2 { font-size: 2rem; line-height: 1.1; }
+
+:focus-visible {
+  outline: 3px solid var(--noite);
+  outline-offset: 3px;
+}
+
+.texto-suave { color: var(--tinta-suave); }
+.cor-el { color: var(--el); }
+
+.titulo-grande {
+  font-size: clamp(2.9rem, 9vw, 5.75rem);
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.descricao {
+  max-width: 36rem;
+  font-size: 1.2rem;
+  line-height: 1.55;
+}
+
+.periodo {
+  font-size: 1.15rem;
+  color: var(--tinta-suave);
+  margin-bottom: 0;
+}
+
+/* ---------- Topo e rodapé ---------- */
+.topo { border-bottom: 1px solid var(--bruma); }
+
+.marca {
+  font-family: var(--fonte-titulo);
+  font-size: 1.6rem;
+  color: var(--noite);
+  text-decoration: none;
+}
+
+.link-topo {
+  color: var(--noite);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--linha-roda);
+  text-underline-offset: 0.3em;
+}
+.link-topo:hover { text-decoration-color: var(--noite); }
+
+.rodape {
+  margin-top: 2rem;
+  border-top: 1px solid var(--bruma);
+  color: var(--tinta-suave);
+  font-size: 0.9rem;
+}
+.rodape p { max-width: 46rem; }
+
+/* ---------- Formulário e botões ---------- */
+.form-data .form-control {
+  border: 1.5px solid var(--noite);
+  border-radius: 0.5rem;
+  background: #fff;
+  color: var(--noite);
+}
+.form-data .form-control:focus {
+  border-color: var(--noite);
+  box-shadow: 0 0 0 0.25rem rgba(19, 27, 59, 0.2);
+}
+
+.btn-noite,
+.btn-contorno {
+  border-radius: 0.5rem;
+  font-weight: 600;
+}
+
+.btn-noite {
+  background: var(--noite);
+  border: 1.5px solid var(--noite);
+  color: #fff;
+}
+.btn-noite:hover,
+.btn-noite:focus-visible {
+  background: #222E5F;
+  border-color: #222E5F;
+  color: #fff;
+}
+
+.btn-contorno {
+  background: transparent;
+  border: 1.5px solid var(--noite);
+  color: var(--noite);
+  padding: 0.7rem 1.2rem;
+}
+.btn-contorno:hover,
+.btn-contorno:focus-visible {
+  background: var(--noite);
+  color: #fff;
+}
+
+.alert-danger {
+  border-radius: 0.5rem;
+  max-width: 36rem;
+}
+
+/* ---------- Roda do zodíaco ---------- */
+.roda-wrap {
+  --roda: min(84vw, 30rem);
+  --raio: calc(var(--roda) * 0.39);
+  position: relative;
+  width: var(--roda);
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+
+.roda {
+  --giro: var(--giro-final, 0deg);
+  position: absolute;
+  inset: 0;
+  animation: girar 1.4s cubic-bezier(0.22, 0.8, 0.26, 1) both;
+}
+
+@keyframes girar {
+  from { --giro: 0deg; }
+  to   { --giro: var(--giro-final, 0deg); }
+}
+
+.roda-anel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--raio) * 2);
+  height: calc(var(--raio) * 2);
+  transform: translate(-50%, -50%);
+  border: 1.5px solid var(--linha-roda);
+  border-radius: 50%;
+}
+.roda-anel::before {
+  content: "";
+  position: absolute;
+  inset: 14%;
+  border: 1px solid var(--bruma);
+  border-radius: 50%;
+}
+
+.roda-signo {
+  --tam: clamp(2.5rem, 12vw, 3.25rem);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--tam);
+  height: var(--tam);
+  margin: calc(var(--tam) / -2) 0 0 calc(var(--tam) / -2);
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--el);
+  border-radius: 50%;
+  background: var(--ceu);
+  color: var(--el);
+  font-family: var(--fonte-simbolos);
+  font-size: calc(var(--tam) * 0.55);
+  line-height: 1;
+  text-decoration: none;
+  /* posiciona no círculo e mantém o símbolo em pé */
+  transform:
+    rotate(calc(var(--i) * 30deg + var(--giro)))
+    translateY(calc(var(--raio) * -1))
+    rotate(calc(var(--i) * -30deg - var(--giro)));
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.roda-signo:hover,
+.roda-signo:focus-visible,
+.roda-signo.ativo {
+  background: var(--el);
+  color: #fff;
+}
+
+.roda-signo.ativo {
+  box-shadow: 0 0 0 4px var(--ceu), 0 0 0 6px var(--el);
+}
+
+.roda-centro {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+.roda-titulo {
+  font-family: var(--fonte-titulo);
+  font-size: calc(var(--roda) * 0.11);
+  line-height: 1.1;
+}
+.roda-sub { color: var(--tinta-suave); font-size: 0.95rem; }
+
+.roda-glifo {
+  font-family: var(--fonte-simbolos);
+  font-size: calc(var(--roda) * 0.3);
+  line-height: 1;
+  color: var(--el);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roda { animation: none; }
+  .roda-signo { transition: none; }
+}
+
+/* ---------- Página do signo ---------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.9rem;
+  border: 1.5px solid var(--el);
+  border-radius: 999px;
+  color: var(--el);
+  font-weight: 500;
+  text-decoration: none;
+  background: transparent;
+  transition: background-color 0.2s, color 0.2s;
+}
+a.chip:hover,
+a.chip:focus-visible {
+  background: var(--el);
+  color: #fff;
+}
+.chip-glifo { font-family: var(--fonte-simbolos); }
+
+.secao {
+  border-top: 1px solid var(--bruma);
+  padding: 3rem 0;
+}
+
+.subtitulo {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Marcador cheio = qualidade; vazado = ponto de atenção */
+.lista-sinal {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.lista-sinal li {
+  position: relative;
+  padding: 0.35rem 0 0.35rem 1.4rem;
+}
+.lista-sinal li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.95em;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--el);
+  border: 2px solid var(--el);
+}
+.lista-sinal.oco li::before { background: transparent; }
+
+.ficha { margin: 0; }
+.ficha-linha {
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--bruma);
+}
+.ficha-linha:first-child { border-top: 1px solid var(--bruma); }
+.ficha-linha dt { font-weight: 500; color: var(--tinta-suave); }
+.ficha-linha dd { margin: 0; font-weight: 600; }
+
+@media (max-width: 575.98px) {
+  .ficha-linha { grid-template-columns: 7.5rem 1fr; }
+  .secao { padding: 2.25rem 0; }
+}

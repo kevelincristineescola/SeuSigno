@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<section class="container py-5">
+  <div class="row align-items-center g-5">
+
+    <div class="col-lg-6">
+      <h1 class="titulo-grande">Qual é o seu signo?</h1>
+      <p class="lead texto-suave descricao">Informe sua data de nascimento e veja o elemento, o planeta regente, as qualidades e as combinações do seu signo.</p>
+
+      {% for mensagem in get_flashed_messages(category_filter=["erro"]) %}
+        <div class="alert alert-danger" role="alert">{{ mensagem }}</div>
+      {% endfor %}
+
+      <form method="post" action="{{ url_for('descobrir') }}" class="form-data mt-4">
+        <label for="data_nascimento" class="form-label fw-semibold">Data de nascimento</label>
+        <div class="d-flex flex-column flex-sm-row gap-2">
+          <input type="date" class="form-control form-control-lg" id="data_nascimento"
+                 name="data_nascimento" min="1900-01-01" max="{{ hoje }}" required>
+          <button type="submit" class="btn btn-noite btn-lg flex-shrink-0">Descobrir meu signo</button>
+        </div>
+      </form>
+
+      <p class="texto-suave small mt-4 mb-0">Prefere explorar? Toque em um símbolo da roda para abrir o perfil do signo. A cor mostra o elemento: fogo, terra, ar ou água.</p>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="roda-wrap">
+        {% include "_roda.html" %}
+        <div class="roda-centro">
+          <span class="roda-titulo">Zodíaco</span>
+          <span class="roda-sub">12 signos</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

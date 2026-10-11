@@ -1,0 +1,12 @@
+<nav class="roda" aria-label="Os 12 signos do zodíaco" style="--giro-final: {{ giro }}deg;">
+  <div class="roda-anel" aria-hidden="true"></div>
+  {% for s in signos %}
+  <a class="roda-signo el-{{ s.classe }}{% if s.slug == ativo %} ativo{% endif %}"
+     href="{{ url_for('signo', slug=s.slug) }}"
+     style="--i: {{ s.ordem }};"
+     title="{{ s.nome }}"
+     aria-label="{{ s.nome }}, {{ s.periodo }}"{% if s.slug == ativo %} aria-current="page"{% endif %}>
+    <span aria-hidden="true">{{ s.simbolo }}&#xFE0E;</span>
+  </a>
+  {% endfor %}
+</nav>

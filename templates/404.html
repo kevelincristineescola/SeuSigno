@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block titulo %}Página não encontrada{% endblock %}
+
+{% block conteudo %}
+<section class="container py-5">
+  <h1 class="titulo-grande">Página não encontrada</h1>
+  <p class="lead texto-suave descricao">Esse endereço não leva a nenhum signo. Volte ao início e informe sua data de nascimento.</p>
+  <a class="btn btn-noite btn-lg" href="{{ url_for('index') }}">Descobrir meu signo</a>
+</section>
+{% endblock %}
